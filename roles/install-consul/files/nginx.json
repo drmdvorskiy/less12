@@ -1,0 +1,19 @@
+{
+ "service": {
+   "id": "webserver",
+   "name": "webserver",
+   "tags": [ "nginx" ],
+   "port": 80,
+   "meta": {
+     "meta": "nginx webserver"
+   },
+   "enable_tag_override": false,
+   "check": {
+     "id": "webserver_up",
+     "name": "nginx healthcheck (fetch localhost)",
+     "http": "http://localhost",
+     "interval": "10s",
+     "timeout": "2s"
+   }
+ }
+}

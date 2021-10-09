@@ -1,0 +1,27 @@
+---
+- name: Add Apt signing key
+  apt_key: url="https://apt.releases.hashicorp.com/gpg" state=present
+
+- name: Adds consul repositories
+  apt_repository: repo="deb [arch=amd64] https://apt.releases.hashicorp.com focal main" state=present
+
+- name: Install consul, nginx
+  apt: name="{{ item }}" state=present update_cache=yes
+  loop:
+    - consul
+    - nginx
+
+- name: Copy consul config
+  template: src="roles/install-consul/files/consul.hcl.j2" dest="/etc/consul.d/consul.hcl"
+
+- name: Register service
+  copy: src="roles/install-consul/files/nginx.json" dest="/etc/consul.d/"
+
+- name: Create directory
+  file: path="/var/log/consul" state=directory
+
+- name: Copy consul.service
+  copy: src="roles/install-consul/files/consul.service" dest="/etc/systemd/system/"
+
+- name: Start consul.service
+  systemd: name=consul.service enabled=yes state=started daemon_reload=yes

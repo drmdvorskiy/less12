@@ -1,0 +1,12 @@
+#client_addr = "0.0.0.0" # for test only
+#bind_addr = "0.0.0.0"
+advertise_addr = "{{ ansible_enp0s8.ipv4.address }}"
+#bootstrap = true
+bootstrap_expect = 3
+server = true
+log_file = "/var/log/consul/"
+log_rotate_duration = "24h"
+data_dir = "/opt/consul"
+datacenter = "dc1"
+retry_join = ["192.168.6.3", "192.168.6.4", "192.168.6.5" ]
+enable_local_script_checks = true

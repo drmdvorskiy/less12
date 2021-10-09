@@ -1,0 +1,14 @@
+- перейти в директорию с проектом и запустить
+vagrant up
+ansible-playbook -u vagrant -i my.invent --private-key key/id_rsa main.yml
+
+#######vagrant destroy -f (для удаления)
+
+Собран кластер consul из 3 нод, на них установлен nginx, добавлен сервис webserver
+и настроен хэлсчек, по главной странице, проверять так:
+
+dig @localhost -p 8600 consul2.node.consul.
+dig @localhost -p 8600 webserver.service.consul.
+
+при выключении какого-нибудь nginx, срабатывает хелс и днс не показывает ноду, на которой упал вебсервер,
+ при включении появляется в списке.
